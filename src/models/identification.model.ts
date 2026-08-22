@@ -1,12 +1,11 @@
 import { Model, DataTypes } from "sequelize";
 import db from "../config/db.js"
-import type { UUID } from "node:crypto";
 
 class Identifications extends Model{
     
     
-    declare identifaction_id:UUID;
-    declare type_identification:UUID;
+    declare id:string;
+    declare type_identification:string;
     declare number:string
     
 
@@ -16,14 +15,14 @@ class Identifications extends Model{
 
 Identifications.init(
     {
-        identification_id:{
+        id:{
             type:DataTypes.UUID,
             defaultValue:DataTypes.UUIDV4,
             primaryKey:true
 
         },
         type_identification:{
-            type:DataTypes.UUID,
+            type:DataTypes.ENUM('CC','TI','CE'),
             allowNull:false
             
         },
@@ -39,3 +38,4 @@ Identifications.init(
 )
 
 
+export default Identifications

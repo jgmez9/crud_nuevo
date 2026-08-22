@@ -1,14 +1,13 @@
 import { Model, DataTypes} from "sequelize";
 import db from "../config/db.js";
-import type { UUID } from "node:crypto";
 
 
-export class TypeRoute extends Model {
-  declare id: UUID;
+export class type_route extends Model {
+  declare id: string;
   declare name: string;
 }
 
-TypeRoute.init(
+type_route.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -17,13 +16,15 @@ TypeRoute.init(
     },
 
     name: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.ENUM('Basic','Advanced'),
       allowNull: false,
     },
   },
   {
     sequelize:db,
-    tableName: "type_route"
+    tableName: "Type_route"
     
   }
 );
+
+export default type_route

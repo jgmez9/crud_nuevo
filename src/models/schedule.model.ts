@@ -1,10 +1,9 @@
 import { DataTypes,Model } from "sequelize";
 import db from "../config/db.js"
-import type { UUID } from "node:crypto";
 
 class Schedule extends Model{
 
-    declare id:UUID;
+    declare id:string;
     declare name:string;
     declare strart_time:string;
     declare end_time:string;
@@ -19,7 +18,7 @@ Schedule.init({
     },
 
     name:{
-        type:DataTypes.STRING,
+        type:DataTypes.ENUM('Daytime','Nocturnal'),
         allowNull:false
     },
     strart_time:{
@@ -32,5 +31,7 @@ Schedule.init({
     }
 },{
     sequelize:db,
-    tableName:"SCHEDULE"
+    tableName:"Schedule"
 })
+
+export default Schedule

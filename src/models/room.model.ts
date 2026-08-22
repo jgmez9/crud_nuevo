@@ -1,13 +1,12 @@
 import { DataTypes,Model, UUIDV4 } from "sequelize";
 import db from "../config/db.js"
-import type { UUID } from "node:crypto";
 
 class Room extends Model {
 
-    declare id:UUID;
+    declare id:string;
     declare name:string;
     declare capacit:number;
-    declare campus_id:UUID;
+    declare campus_id:string;
 }
 
 Room.init ({
@@ -34,6 +33,8 @@ Room.init ({
 },
     {
         sequelize:db,
-        tableName:"ROOM"
+        tableName:"Room"
     }
 )
+
+export default Room

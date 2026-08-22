@@ -1,14 +1,14 @@
 import { Model, DataTypes } from "sequelize";
 import db from "../config/db.js";
-import type { UUID } from "node:crypto";
 
-export class AddressUser extends Model {
-  declare id: UUID;
+
+export class Address_user extends Model {
+  declare id: string;
   declare city_id: string;
   declare address: string;
 }
 
-AddressUser.init(
+Address_user.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -28,7 +28,9 @@ AddressUser.init(
   },
   {
     sequelize:db,
-    tableName: "address_user",
+    tableName: "Address",
     
   }
 );
+
+export default Address_user

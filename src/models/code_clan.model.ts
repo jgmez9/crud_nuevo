@@ -1,26 +1,25 @@
 import { Model, DataTypes } from "sequelize";
 import db from "../config/db.js";
-import type { UUID } from "node:crypto";
 
-export class CoderClan extends Model {
-  declare clan_id: UUID;
-  declare coder_id: UUID;
+export class Coder_clan extends Model {
+  declare clan_id: string;
+  declare coder_id: string;
   declare start_date: Date;
   declare end_date: Date | null;
 }
 
-CoderClan.init(
+Coder_clan.init(
   {
     clan_id: {
       type: DataTypes.UUID,
       allowNull: false,
-      primaryKey: true,
+      
     },
-
     coder_id: {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
+
     },
 
     start_date: {
@@ -35,6 +34,11 @@ CoderClan.init(
   },
   {
     sequelize:db,
-    tableName: "coder_clan",
+    tableName: "Coder_clan",
     }
 );  
+
+
+
+
+export default Coder_clan

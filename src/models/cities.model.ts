@@ -1,10 +1,9 @@
 import { DataTypes,Model } from "sequelize";
 import db from "../config/db.js";
-import type { UUID } from "node:crypto";
 
 class Cities extends Model{
 
-    declare id:UUID;
+    declare id:string;
     declare name:string;
     declare code_name:string;
 }
@@ -33,7 +32,9 @@ Cities.init({
     },
     {
         sequelize:db,
-        tableName:"CITIES"
+        tableName:"Cities"
     }
 
 )
+
+export default Cities

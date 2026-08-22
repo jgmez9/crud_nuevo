@@ -1,12 +1,12 @@
 import { DataTypes,Model, UUIDV4 } from "sequelize";
 import db from "../config/db.js"
-import type { UUID } from "node:crypto";
+
 
 class Campus extends Model {
 
-    declare id:UUID;
+    declare id:string;
     declare name:string;
-    declare city_id:UUID;
+    declare city_id:string;
     declare address:string;
 }
 
@@ -22,7 +22,7 @@ Campus.init({
         allowNull:false,
     },
     city_id:{
-        type:DataTypes.UUID,
+        type:DataTypes.ENUM('Barranquilla',"Medellin"),
         allowNull:false,
     },
     address:{
@@ -32,5 +32,7 @@ Campus.init({
 },
 {
     sequelize:db,
-    tableName:"CAMPUS"
+    tableName:"Campus"
 })
+
+export default Campus

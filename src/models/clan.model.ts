@@ -1,14 +1,14 @@
 import { Model, DataTypes } from "sequelize";
 import db from "../config/db.js";
-import type { UUID } from "node:crypto";
+
 
 export class Clan extends Model {
-  declare id: UUID;
+  declare id: string;
   declare name: string;
-  declare schedule_id: UUID;
-  declare type_route_id: UUID;
-  declare room_id:UUID;
-  declare ft_id: UUID;
+  declare schedule_id: string;
+  declare type_route_id: string;
+  declare room_id:string;
+  declare ft_id: string;
 }
 
 Clan.init(
@@ -46,6 +46,8 @@ Clan.init(
   },
   {
     sequelize:db,
-    tableName: "clan"
+    tableName: "Clan"
   }
 );
+
+export default Clan
