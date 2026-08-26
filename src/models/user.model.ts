@@ -60,19 +60,16 @@ User.init (
 
         rol_id:{
             type:DataTypes.UUID,
-            defaultValue:DataTypes.UUIDV4,
-            allowNull:false
+            allowNull:true
         },
         
-        Identifications_id:{
+        Identifications_id:{    
             type: DataTypes.UUID,
-            defaultValue:DataTypes.UUIDV4,
-            allowNull:false
+            allowNull:true
         },
         address_user_id:{
             type: DataTypes.UUID,
-            defaultValue:DataTypes.UUIDV4,
-            allowNull:false
+            allowNull:true
         }
         
     },
