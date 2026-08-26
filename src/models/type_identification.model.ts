@@ -1,5 +1,6 @@
 import { DataTypes,Model } from "sequelize";
 import db from "../config/db.js"
+import Identifications from "./identification.model.js";
 
 class type_identifications extends Model {
 
@@ -18,7 +19,7 @@ type_identifications.init({
         
     },
     name:{
-        type:DataTypes.STRING,
+        type:DataTypes.ENUM('CC','TI','PP','CE','PPT'),
         allowNull:false
     },
     code:{
@@ -35,3 +36,4 @@ type_identifications.init({
 )
 
 export default type_identifications
+

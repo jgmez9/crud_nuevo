@@ -1,5 +1,6 @@
 //Importamos todos los modelos de nuestra base de datos 
 
+
 import Address_user from "../models/address_user.model.js";
 import Campus from "../models/campus.model.js";
 import Cities from "../models/cities.model.js";
@@ -14,7 +15,7 @@ import type_route from "../models/type_route.model.js";
 import User from "../models/user.model.js";
 
 
-//Realizamos las relaciones entre tablas
+//Realizamos las relaciones de la tabla User
 
 Rol.hasMany(User,{
     foreignKey:"rol_id"
@@ -42,3 +43,39 @@ Address_user.belongsTo(User,{
 })
 
 
+//Realizamos las relaciones de la tabla Clan
+
+Clan.belongsTo(User, {foreignKey:'id_tl'})
+
+
+Clan.belongsTo(Room,{foreignKey:'room_id'})
+
+
+Clan.belongsTo(type_route,{foreignKey:'type_r'})
+
+
+Clan.belongsTo(Schedule)
+
+
+//Realizamos las relaciones de la tabla Coder_clan
+
+Coder_clan.belongsTo(Clan,{foreignKey:'clan_id'})
+Coder_clan.belongsTo(User,{foreignKey:'code_id'})
+
+
+//Realizamos las relaciones de la tabla room
+
+Campus.hasMany(Room,{foreignKey:'Campus_id'})
+Room.belongsTo(Campus,{foreignKey:'Campus_id'})
+
+//Realizamos las relaciones de la tabla city
+
+
+Cities.belongsTo(Campus,{foreignKey:'city_id'})
+
+//Realizamos la relacion de identifications
+
+Identifications.belongsTo(type_identifications, {
+    foreignKey: "type_identification",
+    as: "typeIdentification",
+});

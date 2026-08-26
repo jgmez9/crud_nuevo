@@ -22,7 +22,7 @@ Identifications.init(
 
         },
         type_identification:{
-            type:DataTypes.ENUM('CC','TI','CE'),
+            type:DataTypes.UUID,
             allowNull:false
             
         },

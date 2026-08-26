@@ -1,9 +1,5 @@
-import { DataTypes,Model } from "sequelize";
+import { DataTypes,Model, UUID } from "sequelize";
 import db from "../config/db.js"
-import Rol from "./roles.model.js";
-import Address_user from "./address_user.model.js";
-import Identifications from "./identification.model.js";
-
 
 class User extends Model {
 
@@ -87,8 +83,5 @@ User.init (
     }
 )
 
-User.belongsTo(Rol, {foreignKey: 'rol_id'})
-User.belongsTo(Identifications,{foreignKey:'Identifications_id'})
-User.belongsTo(Address_user, {foreignKey: 'address_user_id'})
 
 export default User

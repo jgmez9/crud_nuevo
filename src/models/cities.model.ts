@@ -1,5 +1,6 @@
 import { DataTypes,Model } from "sequelize";
 import db from "../config/db.js";
+import Campus from "./campus.model.js";
 
 class Cities extends Model{
 
@@ -36,5 +37,8 @@ Cities.init({
     }
 
 )
+
+
+
 
 export default Cities

@@ -18,6 +18,9 @@ Rol.init({
         type:DataTypes.ENUM('Coder','TL'),
         allowNull:false
     }
+  
+        
+    
 
 },
     {

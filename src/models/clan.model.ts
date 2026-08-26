@@ -8,7 +8,7 @@ export class Clan extends Model {
   declare schedule_id: string;
   declare type_route_id: string;
   declare room_id:string;
-  declare ft_id: string;
+  declare tl_id: string;
 }
 
 Clan.init(
@@ -39,7 +39,7 @@ Clan.init(
       allowNull: false,
     },
 
-    ft_id: {
+    tl_id: {
       type: DataTypes.UUID,
       allowNull: false,
     },
@@ -49,5 +49,7 @@ Clan.init(
     tableName: "Clan"
   }
 );
+
+
 
 export default Clan

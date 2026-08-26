@@ -1,5 +1,6 @@
 import { DataTypes,Model, UUIDV4 } from "sequelize";
 import db from "../config/db.js"
+import Cities from "./cities.model.js";
 
 
 class Campus extends Model {
@@ -22,7 +23,7 @@ Campus.init({
         allowNull:false,
     },
     city_id:{
-        type:DataTypes.ENUM('Barranquilla',"Medellin"),
+        type:DataTypes.STRING,
         allowNull:false,
     },
     address:{
@@ -34,5 +35,6 @@ Campus.init({
     sequelize:db,
     tableName:"Campus"
 })
+
 
 export default Campus
