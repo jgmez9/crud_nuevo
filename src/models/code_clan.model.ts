@@ -15,7 +15,7 @@
         allowNull: false,
         
       },
-      coder_id: {
+      id: {
         type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,

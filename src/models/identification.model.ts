@@ -22,12 +22,12 @@ Identifications.init(
 
         },
         type_identification:{
-            type:DataTypes.UUID,
+            type:DataTypes.STRING,
             allowNull:false
             
         },
         number:{
-            type:DataTypes.UUID,
+            type:DataTypes.STRING,
             allowNull:false
         }
     },

@@ -1,5 +1,6 @@
-//Importamos todos los modelos de nuestra base de datos 
-
+// ============================
+// IMPORTACIÓN DE MODELOS
+// ============================
 
 import Address_user from "../models/address_user.model.js";
 import Campus from "../models/campus.model.js";
@@ -10,65 +11,209 @@ import Identifications from "../models/identification.model.js";
 import Rol from "../models/roles.model.js";
 import Room from "../models/room.model.js";
 import Schedule from "../models/schedule.model.js";
-import type_identifications from "../models/type_identification.model.js";
-import type_route from "../models/type_route.model.js";
+import Type_identifications from "../models/type_identification.model.js";
+import Type_route from "../models/type_route.model.js";
 import User from "../models/user.model.js";
 
 
+// ======================================
+// ROL - USER
+// Un rol puede tener muchos usuarios
+// Un usuario pertenece a un rol
+// ======================================
 
-Rol.hasMany(User,{
-    foreignKey:"rol_id"
+Rol.hasMany(User, {
+    foreignKey: "rol_id",
+    as: "users"
 });
 
-User.belongsTo(Rol,{
-    foreignKey:"rol_id"
-})
-
-User.hasOne(Identifications,{
-    foreignKey:"Identifications_id"
-})
-
-Identifications.belongsTo(User,{
-    foreignKey:"Identifications_id"
-})
+User.belongsTo(Rol, {
+    foreignKey: "rol_id",
+    as: "role"
+});
 
 
-User.hasOne(Address_user,{
-    foreignKey:"address_user_id"
-})
+// ======================================
+// IDENTIFICATION - USER
+// Una identificación pertenece a un usuario
+// Un usuario tiene una identificación
+// ======================================
 
-Address_user.belongsTo(User,{
-    foreignKey:"address_user_id"
-})
+Identifications.hasOne(User, {
+    foreignKey: "identification_id",
+    as: "user"
+});
 
-
-
-Clan.belongsTo(User, {foreignKey:'id_tl'})
-
-
-Clan.belongsTo(Room,{foreignKey:'room_id'})
-
-
-Clan.belongsTo(type_route,{foreignKey:'type_route_id'})
+User.belongsTo(Identifications, {
+    foreignKey: "identification_id",
+    as: "identification"
+});
 
 
-Clan.belongsTo(Schedule,{foreignKey:'schedule_id'})
+// ======================================
+// ADDRESS - USER
+// Una dirección pertenece a un usuario
+// Un usuario tiene una dirección
+// ======================================
+
+Address_user.hasOne(User, {
+    foreignKey: "address_user_id",
+    as: "user"
+});
+
+User.belongsTo(Address_user, {
+    foreignKey: "address_user_id",
+    as: "address"
+});
 
 
+// ======================================
+// USER (TEAM LEADER) - CLAN
+// Un TL puede tener varios clanes
+// Un clan pertenece a un TL
+// ======================================
 
-Coder_clan.belongsTo(Clan,{foreignKey:'clan_id'})
-Coder_clan.belongsTo(User,{foreignKey:'code_id'})
+User.hasMany(Clan, {
+    foreignKey: "tl_id",
+    as: "clans"
+});
+
+Clan.belongsTo(User, {
+    foreignKey: "tl_id",
+    as: "teamLeader"
+});
 
 
+// ======================================
+// ROOM - CLAN
+// Un salón puede tener varios clanes
+// Un clan pertenece a un salón
+// ======================================
 
-Campus.hasMany(Room,{foreignKey:'campus_id'})
-Room.belongsTo(Campus,{foreignKey:'campus_id'})
+Room.hasMany(Clan, {
+    foreignKey: "room_id",
+    as: "clans"
+});
+
+Clan.belongsTo(Room, {
+    foreignKey: "room_id",
+    as: "room"
+});
 
 
-Cities.belongsTo(Campus,{foreignKey:'city_id'})
+// ======================================
+// TYPE ROUTE - CLAN
+// Un tipo de ruta puede tener varios clanes
+// Un clan pertenece a un tipo de ruta
+// ======================================
+
+Type_route.hasMany(Clan, {
+    foreignKey: "type_route_id",
+    as: "clans"
+});
+
+Clan.belongsTo(Type_route, {
+    foreignKey: "type_route_id",
+    as: "typeRoute"
+});
 
 
-Identifications.belongsTo(type_identifications, {
-    foreignKey: "type_identification",
-    as: "typeIdentification",
+// ======================================
+// SCHEDULE - CLAN
+// Un horario puede tener varios clanes
+// Un clan pertenece a un horario
+// ======================================
+
+Schedule.hasMany(Clan, {
+    foreignKey: "schedule_id",
+    as: "clans"
+});
+
+Clan.belongsTo(Schedule, {
+    foreignKey: "schedule_id",
+    as: "schedule"
+});
+
+
+// ======================================
+// CLAN - CODER_CLAN
+// Un clan puede tener muchos coders
+// ======================================
+
+Clan.hasMany(Coder_clan, {
+    foreignKey: "clan_id",
+    as: "coderClans"
+});
+
+Coder_clan.belongsTo(Clan, {
+    foreignKey: "clan_id",
+    as: "clan"
+});
+
+
+// ======================================
+// USER - CODER_CLAN
+// Un usuario puede pertenecer a registros
+// dentro de coder_clan
+// ======================================
+
+User.hasMany(Coder_clan, {
+    foreignKey: "coder_id",
+    as: "coderClans"
+});
+
+Coder_clan.belongsTo(User, {
+    foreignKey: "coder_id",
+    as: "coder"
+});
+
+
+// ======================================
+// CAMPUS - ROOM
+// Un campus puede tener muchos salones
+// Un salón pertenece a un campus
+// ======================================
+
+Campus.hasMany(Room, {
+    foreignKey: "campus_id",
+    as: "rooms"
+});
+
+Room.belongsTo(Campus, {
+    foreignKey: "campus_id",
+    as: "campus"
+});
+
+
+// ======================================
+// CITY - CAMPUS
+// Una ciudad puede tener varios campus
+// Un campus pertenece a una ciudad
+// ======================================
+
+Cities.hasMany(Campus, {
+    foreignKey: "city_id",
+    as: "campuses"
+});
+
+Campus.belongsTo(Cities, {
+    foreignKey: "city_id",
+    as: "city"
+});
+
+
+// ======================================
+// TYPE IDENTIFICATION - IDENTIFICATION
+// Un tipo de identificación puede tener
+// muchas identificaciones
+// ======================================
+
+Type_identifications.hasMany(Identifications, {
+    foreignKey: "type_identification_id",
+    as: "identifications"
+});
+
+Identifications.belongsTo(Type_identifications, {
+    foreignKey: "type_identification_id",
+    as: "typeIdentification"
 });

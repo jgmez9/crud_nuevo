@@ -19,7 +19,7 @@ Campus.init({
         primaryKey:true,
     },
     name:{
-        type:DataTypes.UUID,
+        type:DataTypes.STRING,
         allowNull:false,
     },
     city_id:{
@@ -27,7 +27,7 @@ Campus.init({
         allowNull:false,
     },
     address:{
-        type:DataTypes.UUID,
+        type:DataTypes.STRING,
         allowNull:false,
     }  
 },

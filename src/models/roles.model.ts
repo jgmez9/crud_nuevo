@@ -2,14 +2,14 @@ import { DataTypes,Model } from "sequelize";
 import db from "../config/db.js"
 
 class Rol extends Model {
-    declare rol_id:string;
+    declare id:string;
     declare name:string;
 
 }
 
 Rol.init({
     
-    rol_id:{
+    id:{
         type:DataTypes.UUID,
         defaultValue:DataTypes.UUIDV4,
         primaryKey:true

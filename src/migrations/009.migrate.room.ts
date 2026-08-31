@@ -1,20 +1,11 @@
-import { DataTypes, Model } from "sequelize";
-import db from "../config/db.js";
+import { QueryInterface,DataTypes } from "sequelize";
 
 
-class Room extends Model {
+export default {
+    up: async (queryInterface:QueryInterface)=>{
+        await queryInterface.createTable('Room',{
 
-    declare id: string;
-    declare name: string;
-    declare type: string;
-    declare capacity: number;
-    declare campus_id: string;
-
-}
-
-Room.init(
-    {
-        id: {
+            id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true
@@ -44,12 +35,11 @@ Room.init(
             type: DataTypes.UUID,
             allowNull: false
         }
+        })
     },
-    {
-        sequelize: db,
-        tableName: "rooms",
-        timestamps: true
-    }
-);
 
-export default Room;
+    down: async(queryInterface:QueryInterface)=>{
+        await queryInterface.dropTable('Room')
+    }
+
+}
