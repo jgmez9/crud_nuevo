@@ -9,8 +9,6 @@
     "start": "node dist/server.js",
     "migrate": "tsx src/config/migrate-up.ts",
     "seed": "tsx src/config/seed-up.ts"
-
-    
   },
   "keywords": [],
   "author": "",
@@ -33,6 +31,7 @@
     "pg": "^8.23.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.8",
-    "umzug": "^3.8.3"
+    "umzug": "^3.8.3",
+    "zod": "^4.5.4"
   }
 }

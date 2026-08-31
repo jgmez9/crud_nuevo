@@ -1,8 +1,52 @@
 import { type Request, type Response, type NextFunction } from "express";
+import { randomUUID } from "crypto";
 import sequelize from "../config/db.js";
 import Solicitud from "../models/solicitud.model.js";
 import DetalleSolicitud from "../models/detalle_solicitud.model.js";
 import Inventario from "../models/inventario.model.js";
+import { type CrearSolicitudDTO } from "../dto/solicitud.dto.js";
+
+export const crearSolicitud = async (
+  req: Request<unknown, unknown, CrearSolicitudDTO>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id_taller, id_bodega, id_user, detalles } = req.body;
+  const t = await sequelize.transaction();
+
+  try {
+    const solicitud = await Solicitud.create(
+      {
+        id_solicitud: randomUUID(),
+        id_taller,
+        id_bodega,
+        id_user,
+        fecha_solicitud: new Date(),
+        state: "Pendiente",
+      },
+      { transaction: t }
+    );
+
+    const filasDetalle = detalles.map((d) => ({
+      id_detalle: randomUUID(),
+      id_solicitud: solicitud.get("id_solicitud"),
+      id_repuesto: d.id_repuesto,
+      cantidad: d.cantidad,
+    }));
+
+    await DetalleSolicitud.bulkCreate(filasDetalle, { transaction: t });
+
+    await t.commit();
+
+    res.status(201).json({
+      ok: true,
+      data: { id_solicitud: solicitud.get("id_solicitud"), detalles: filasDetalle },
+    });
+  } catch (error) {
+    await t.rollback();
+    next(error);
+  }
+};
 
 export const aprobarSolicitud = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
@@ -14,7 +58,6 @@ export const aprobarSolicitud = async (req: Request, res: Response, next: NextFu
   const t = await sequelize.transaction();
 
   try {
-    // Bloqueamos la fila para que dos aprobaciones simultáneas no pisen el mismo stock
     const solicitud = await Solicitud.findByPk(id, {
       transaction: t,
       lock: t.LOCK.UPDATE,
@@ -43,7 +86,6 @@ export const aprobarSolicitud = async (req: Request, res: Response, next: NextFu
       return res.status(400).json({ ok: false, message: "La solicitud no tiene repuestos asociados" });
     }
 
-    // 1) Verificar TODO el stock antes de descontar nada
     for (const detalle of detalles) {
       const inventario = await Inventario.findOne({
         where: {
@@ -66,7 +108,6 @@ export const aprobarSolicitud = async (req: Request, res: Response, next: NextFu
       }
     }
 
-    // 2) Si TODO alcanza, ahora sí descontamos cada repuesto
     for (const detalle of detalles) {
       await Inventario.decrement("cantidad", {
         by: Number(detalle.get("cantidad")),
@@ -78,7 +119,6 @@ export const aprobarSolicitud = async (req: Request, res: Response, next: NextFu
       });
     }
 
-    // 3) Cambiamos el estado de la solicitud
     solicitud.set("state", "Aprobada");
     await solicitud.save({ transaction: t });
 
