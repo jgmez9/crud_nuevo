@@ -1,18 +1,18 @@
 import { Model, DataTypes } from "sequelize";
 import db from "../config/db.js";
 
-class User extends Model {
-  declare id_user: string;
+class Bodega extends Model {
+  declare id_bodega: string;
   declare name: string;
-  declare email: string;
-  declare password: string;
+  declare ciudad: string;
+  declare address: string;
   declare state: string;
-  declare id_rol: string;
+  declare id_distribuciones: string;
 }
 
-User.init(
+Bodega.init(
   {
-    id_user: {
+    id_bodega: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
@@ -24,13 +24,12 @@ User.init(
       allowNull: false,
     },
 
-    email: {
+    ciudad: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
 
-    password: {
+    address: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -40,16 +39,16 @@ User.init(
       allowNull: false,
     },
 
-    id_rol: {
+    id_distribuciones: {
       type: DataTypes.UUID,
       allowNull: false,
     },
   },
   {
     sequelize: db,
-    tableName: "Users",
+    tableName: "Bodega",
     timestamps: true,
   }
 );
 
-export default User;
+export default Bodega;

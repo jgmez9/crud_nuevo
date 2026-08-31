@@ -1,18 +1,18 @@
 import { Model, DataTypes } from "sequelize";
 import db from "../config/db.js";
 
-class User extends Model {
-  declare id_user: string;
+class Repuestos extends Model {
+  declare id_repuesto: string;
   declare name: string;
-  declare email: string;
-  declare password: string;
+  declare code: string;
+  declare description: string;
+  declare price: string;
   declare state: string;
-  declare id_rol: string;
 }
 
-User.init(
+Repuestos.init(
   {
-    id_user: {
+    id_repuesto: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
@@ -24,14 +24,19 @@ User.init(
       allowNull: false,
     },
 
-    email: {
+    code: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
 
-    password: {
+    description: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+
+    price: {
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
 
@@ -39,17 +44,12 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-
-    id_rol: {
-      type: DataTypes.UUID,
-      allowNull: false,
-    },
   },
   {
     sequelize: db,
-    tableName: "Users",
+    tableName: "Repuestos",
     timestamps: true,
   }
 );
 
-export default User;
+export default Repuestos;

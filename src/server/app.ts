@@ -8,11 +8,21 @@ import "../associations/association.js";
 
 import userRoutes from "../routes/user.routes.js";
 
+import { setupAssociations } from "../associations/association.js"
+
+import routes from "../routes/index.js";
+
+
+
+
+setupAssociations();
+
 const app = express();
 
 app.use(express.json());
 
 app.use("/users", userRoutes);
+app.use("/api", routes);
 
 const startServer = async () => {
 

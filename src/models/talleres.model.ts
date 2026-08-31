@@ -1,18 +1,19 @@
 import { Model, DataTypes } from "sequelize";
 import db from "../config/db.js";
 
-class User extends Model {
-  declare id_user: string;
+class Talleres extends Model {
+  declare id_taller: string;
   declare name: string;
-  declare email: string;
-  declare password: string;
+  declare nit: string;
+  declare address: string;
+  declare phone: string;
+  declare responsable: string;
   declare state: string;
-  declare id_rol: string;
 }
 
-User.init(
+Talleres.init(
   {
-    id_user: {
+    id_taller: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
@@ -24,13 +25,23 @@ User.init(
       allowNull: false,
     },
 
-    email: {
+    nit: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
 
-    password: {
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+
+    responsable: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -39,17 +50,12 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-
-    id_rol: {
-      type: DataTypes.UUID,
-      allowNull: false,
-    },
   },
   {
     sequelize: db,
-    tableName: "Users",
+    tableName: "Talleres",
     timestamps: true,
   }
 );
 
-export default User;
+export default Talleres;

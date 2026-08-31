@@ -1,37 +1,26 @@
 import { Model, DataTypes } from "sequelize";
 import db from "../config/db.js";
 
-class User extends Model {
-  declare id_user: string;
-  declare name: string;
-  declare email: string;
-  declare password: string;
+class Solicitud extends Model {
+  declare id_solicitud: string;
+  declare fecha_solicitud: Date;
   declare state: string;
-  declare id_rol: string;
+  declare id_bodega: string;
+  declare id_user: string;
+  declare id_taller: string;
 }
 
-User.init(
+Solicitud.init(
   {
-    id_user: {
+    id_solicitud: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
     },
 
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-
-    password: {
-      type: DataTypes.STRING,
+    fecha_solicitud: {
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
 
@@ -40,16 +29,26 @@ User.init(
       allowNull: false,
     },
 
-    id_rol: {
+    id_bodega: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+
+    id_user: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+
+    id_taller: {
       type: DataTypes.UUID,
       allowNull: false,
     },
   },
   {
     sequelize: db,
-    tableName: "Users",
+    tableName: "Solicitudes",
     timestamps: true,
   }
 );
 
-export default User;
+export default Solicitud;
